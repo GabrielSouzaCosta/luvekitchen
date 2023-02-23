@@ -11,7 +11,14 @@ class Recipe extends Model
 
     protected $fillable = [
         'id',
+        'name',
+        'image_url'
     ];
 
     public $incrementing = false;
+
+    public function comments() 
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

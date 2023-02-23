@@ -28,19 +28,40 @@ const Card = styled.div`
 
 const RecipeImage = styled.div`
     position: relative;
-    max-width: 360px;
+    width: 100%;
     height: 280px;
+    @media screen and (max-width: 968px) {
+        height: 150px;
+    }
 `
 
 const Content = styled.div`
+    overflow: visible;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 10px 8px;
     background-color: #FAFAFA;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    @media screen and (max-width: 968px) {
+        height: 85px;
+    }
 `
 
 const Name = styled(P)`
+    margin: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+            line-clamp: 2;
+    -webkit-box-orient: vertical;    
     text-align: center;
+    @media screen and (max-width: 968px) {
+            font-size: 0.9rem;
+    }
 `
 
 const RecipeItem = ({ recipe_id, href, src, name, favoriteInItem } : Props) => {
@@ -49,13 +70,15 @@ const RecipeItem = ({ recipe_id, href, src, name, favoriteInItem } : Props) => {
     <Card>
         <RecipeImage>
             <Favorite 
-                onRecipeItem={favoriteInItem}
+                recipeItem={favoriteInItem}
                 recipe_id={recipe_id}
+                name={name}
+                image_url={src}
             />
             <CoverRoundedImage
-                src={src}
+                src={src ? src : require('../../public/images/image_not_found.gif')}
                 fill
-                alt={name}
+                alt={name ? name : ''}
             />
         </RecipeImage>
         <Content>
@@ -63,7 +86,7 @@ const RecipeItem = ({ recipe_id, href, src, name, favoriteInItem } : Props) => {
                 { name }
             </Name>
             <FlexRowDiv columnGap='8px'>
-                <Link href={href} style={{ width: '50%' }}>
+                <Link href={href} style={{ width: '100%', textAlign: 'center' }}>
                     <Button variant="secondary" textSmall>
                         <FlexRowDiv justifyCenter>
                             <IoBookOutline style={{ marginRight: '5px' }} />
@@ -71,12 +94,6 @@ const RecipeItem = ({ recipe_id, href, src, name, favoriteInItem } : Props) => {
                         </FlexRowDiv>
                     </Button>
                 </Link>
-                <Button variant="secondary-outline" textSmall style={{ width: '50%' }}>
-                    <FlexRowDiv justifyCenter>
-                        <BsBookmarkPlus style={{ marginRight: '5px' }} />
-                        Add to List
-                    </FlexRowDiv>
-                </Button>
             </FlexRowDiv>
         </Content>
     </Card>

@@ -15,7 +15,9 @@ class RecipeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $request->id,
+            'recipe_id' => $request->id,
+            'name' => $this->name,
+            'image_url' => $this->image_url,
         ];
     }
 }

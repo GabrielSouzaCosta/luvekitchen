@@ -1,10 +1,13 @@
 import { Dispatch } from "react";
 
 export interface Favorite {
-    recipe_id: string
+    recipe_id: string,
+    name?: string,
+    image_url?: string,
 }
 
 export interface User {
+    id?: string,
     token?: string,
     name?: string,
     avatar_img?: string,

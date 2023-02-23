@@ -26,7 +26,9 @@ class FavoriteController extends Controller
         try {
             if (!Recipe::find($request->recipe_id)) {
                 $recipe = Recipe::create([
-                    'id' => $request->recipe_id
+                    'id' => $request->recipe_id,
+                    'name' => $request->name,
+                    'image_url' => $request->image_url,
                 ]);
             };
 

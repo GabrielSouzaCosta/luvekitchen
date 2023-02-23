@@ -3,7 +3,10 @@ import styled, { css } from "styled-components";
 type Props = {
     columnGap?: string,
     justifyCenter?: boolean,
+    responsive?: boolean,
     m?: string,
+    my?: string,
+    mx?: string,
     mt?: string,
     mb?: string,
     ml?: string,
@@ -13,6 +16,10 @@ type Props = {
 export const Container = styled.div`
     max-width: 1300px;
     margin: 0 auto;
+    padding: 4px 20px;
+    @media screen and (max-width: 968px) {
+        padding: 4px 8px;
+    }
 `
 
 export const FlexRowDiv = styled.div`
@@ -29,6 +36,14 @@ export const FlexRowBetweenDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    ${(p : Props) => p.responsive && css`
+        @media screen and (max-width: 968px) {
+            flex-direction: column;
+            justify-content: start;
+            align-items: flex-start;
+        }
+    `
+    }
 `
 
 export const FlexColumnCenteredDiv = styled.div`
@@ -41,24 +56,29 @@ export const FlexColumnCenteredDiv = styled.div`
 
 export const AlignCenterDiv = styled.div`
     text-align: center;
+    width: 100%
 `
 
-export const MarginView = styled.div`
-    margin: ${(p : Props) => p.m ? p.m: '0'};
+export const FullWidthDiv = styled.div`
+    width: 100%;
 `
 
-export const MarginVerticalView = styled.div`
-    margin: ${(p : Props) => p.m ? p.m: '0'} 0;
+export const MarginDiv = styled.div`
+    ${(p : Props) => p.m && css`
+        margin: ${p.m};
+    `}
+    ${(p : Props) => p.mx && css`
+        margin: 0 ${p.mx};
+    `}
+    ${(p : Props) => p.my && css`
+        margin: ${p.my} 0;
+    `}
     ${(p : Props) => p.mt && css`
         margin-top: ${p.mt};
     `}
     ${(p : Props) => p.mb && css`
         margin-bottom: ${p.mb};
     `}
-`
-
-export const MarginHorizontalView = styled.div`
-    margin: 0 ${(p : Props) => p.m ? p.m: '0'};
     ${(p : Props) => p.ml && css`
         margin-left: ${p.ml};
     `}

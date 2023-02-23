@@ -33,6 +33,10 @@ const Label = styled.label`
     font-size: 18px;
     margin-bottom: 6px;
     margin-left: 6px;
+    @media screen and (max-width: 1400px) {
+        font-size: 14px;
+        margin-bottom: 5px;   
+    }
 `
 
 export default InputContainer

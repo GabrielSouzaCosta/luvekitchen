@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 import Logo from '../components/Logo'
@@ -11,15 +12,33 @@ function Footer() {
       <FooterContainer>
         <FlexDiv>
           <Logo />
+
+          <List>
+              <li>
+                <Link href='/recipes'>
+                  Recipes
+                </Link>
+              </li>
+              <li>
+                <Link href='/about'>
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href='/login'>
+                  Login
+                </Link>
+              </li>
+          </List>
         </FlexDiv>
         <LightLine />
         <FlexDiv>
-          <P marginSize="none">
+          <BottomText marginSize="none">
             Copyright © 2023 Luv&amp;Kitchen
-          </P>
-          <P marginSize="none">
+          </BottomText>
+          <BottomText marginSize="none">
             Website developed by <span style={{ color: colors.primary }}>Gabriel Souza Costa</span>
-          </P>
+          </BottomText>
         </FlexDiv>
       </FooterContainer>
     </StyledFooter>
@@ -28,7 +47,7 @@ function Footer() {
 
 const FooterContainer = styled(Container)`
   width: 100%;
-  padding: 14px 0;
+  padding: 14px 0px;
 `;
 
 const StyledFooter = styled.footer`
@@ -44,11 +63,39 @@ const FlexDiv = styled.div`
   > p {
     color: ${colors.light};
   }
+  @media screen and (max-width: 968px) {
+    flex-direction: column;
+    row-gap: 8px;
+  }
+`
+
+const List = styled.ul`
+  display: flex;
+  column-gap: 200px;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+  > li > a {
+    color: ${p => p.theme.colors.light};
+    transition: all 200ms;
+    &:hover {
+      color: ${p => p.theme.colors.primary}
+    }
+  }
 `
 
 const LightLine = styled.div`
-  margin: 8px 0;
+  margin: 8px auto;
   border: 0.5px solid #ef476fab;
+  @media screen and (max-width: 968px) {
+    width: 90%;
+  }
 `;
+
+const BottomText = styled(P)`
+  @media screen and (max-width: 968px) {
+     font-size: 0.8rem;
+  }
+`
 
 export default Footer

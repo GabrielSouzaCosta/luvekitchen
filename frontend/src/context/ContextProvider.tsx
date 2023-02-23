@@ -10,10 +10,10 @@ type ContextProps = {
 export const ContextProvider = ({ children }: ContextProps) => {
     const [userData, setUserData] = useState<User>();
 
-    function saveUserSession({ token, name, avatar_img, favorites } : User) {
-        setUserData({ ...userData, token, name, avatar_img, favorites });
+    function saveUserSession({ token, name, avatar_img, favorites, id } : User) {
+        setUserData({ ...userData, token, name, avatar_img, favorites, id });
         const currLocalUserData = JSON.parse(sessionStorage.getItem('user'));
-        sessionStorage.setItem('user', JSON.stringify({ ...currLocalUserData, token, name, avatar_img, favorites }))
+        sessionStorage.setItem('user', JSON.stringify({ ...currLocalUserData, token, name, avatar_img, favorites, id }))
     }
 
     function logout() {

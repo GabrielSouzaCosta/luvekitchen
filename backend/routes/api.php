@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\Api\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FavoriteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('auth/user', [AuthController::class, 'user']);
     Route::get('auth/user/favorites', [FavoriteController::class, 'index']);
     Route::post('add-favorite', [FavoriteController::class, 'store']);
+    Route::post("recipe/add-comment", [CommentController::class, 'store']);
 });
 
+Route::get("recipe/comments", [CommentController::class, 'index']);

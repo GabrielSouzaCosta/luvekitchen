@@ -8,10 +8,10 @@ type Props = {
 }   
 
 export const Button = styled.button`
+    max-width: ${p => p.maxWidth ? p.maxWidth : '180px' };
     text-align: center;
     border-radius: 100px;
     padding: 8px 18px;
-    max-width: 180px;
     width: 100%;
     border-width: 1px;
     border: 1px solid transparent;
@@ -108,6 +108,10 @@ const StyledPrimaryToggleButton = styled(Button)`
         transition: all 250ms;
         box-shadow: 0px 4px 14px #00000033;
     }
+    @media screen and (max-width: 1400px) {
+        padding: 4px 8px;
+        max-width: 120px;
+    }
 `
 
 export const SecondaryToggleButton = ({
@@ -138,5 +142,9 @@ const StyledSecondaryToggleButton = styled(Button)`
         border: 1px solid ${({ theme }: Props) => theme.colors.secondary};
         transition: all 250ms;
         box-shadow: 0px 4px 12px #00000011;
+    }
+    @media screen and (max-width: 1400px) {
+        padding: 4px 8px;
+        max-width: 120px;
     }
 `

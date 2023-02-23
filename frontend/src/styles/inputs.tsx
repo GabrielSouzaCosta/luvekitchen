@@ -16,6 +16,11 @@ type StyledInputProps = {
     hasIconRight? : boolean,
 }
 
+const InputDiv = styled.div`
+    position: relative;
+    display: flex;
+`
+
 const StyledInput = styled.input`
     flex: 1;
     font-size: 18px;
@@ -23,7 +28,26 @@ const StyledInput = styled.input`
     border-radius: 100px;
     background: #FDFDFD;
     box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
-    padding: 12px 4px 12px ${(p : StyledInputProps) => p.hasIconLeft ? '45px' : '18px'};
+    padding: 12px 0 12px 0;
+    padding-left: ${(p: StyledInputProps) => p.hasIconLeft ? '42px' : '10px'};
+    padding-right: ${(p: StyledInputProps) => p.hasIconRight ? '36px' : '10px'};
+    @media screen and (max-width: 1400px) {
+        padding: 10px 36px 10px ${(p : StyledInputProps) => p.hasIconLeft ? '45px' : '18px'};
+        padding-left: ${(p: StyledInputProps) => p.hasIconLeft ? '42px' : '10px'};
+        padding-right: ${(p: StyledInputProps) => p.hasIconRight ? '36px' : '10px'};
+        font-size: 14px;
+    }
+`
+
+const IconRight = styled.div`
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    padding-right: 6px;
 `
 
 export const Input = ({
@@ -36,19 +60,19 @@ export const Input = ({
 } : InputProps & React.InputHTMLAttributes<HTMLInputElement>) => {
 
     return (
-        <div style={{ position: 'relative', display: 'flex' }}>
+        <InputDiv>
             <span className="inner-icon">
                 {iconLeft}
             </span>
             {register && name ? 
-                <StyledInput {...props} hasIconLeft={!!iconLeft} {...register(name, validationSchema)} />
+                <StyledInput {...props} hasIconLeft={!!iconLeft} hasIconRight={!!iconRight} {...register(name, validationSchema)} />
                     :
-                <StyledInput {...props} hasIconLeft={!!iconLeft} />
+                <StyledInput {...props} hasIconLeft={!!iconLeft} hasIconRight={!!iconRight} />
             }
-            <span className="inner-icon">
+            <IconRight>
                 {iconRight}
-            </span>
-        </div>
+            </IconRight>
+        </InputDiv>
     )
 }
 

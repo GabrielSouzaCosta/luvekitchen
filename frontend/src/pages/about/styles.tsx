@@ -21,7 +21,7 @@ const Ul = styled.ul`
     display: flex;
     justify-content: center;
     column-gap: 1rem;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
 `
 
 export const SocialIcons = () => (

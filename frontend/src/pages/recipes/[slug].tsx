@@ -1,4 +1,4 @@
-import { AlignCenterDiv, MarginVerticalView } from '@/styles/layout';
+import { AlignCenterDiv, MarginDiv } from '@/styles/layout';
 import Head from 'next/head';
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -39,20 +39,20 @@ const RecipesCategory = () => {
 		</Head>
 		<Layout>
 			<RecipesContainer>
-				<StyledInput 
-					value={search}
-					onChange={(e) => setSearch(e.target.value)}
-					type="text" 
-					placeholder='Search for a recipe' 
-					iconLeft={ <IoSearchOutline size={24} color={colors.dark} />} 
-				/> 
-				<MarginVerticalView mt={'30px'}>
-					<AlignCenterDiv>
-						<H1>
-							{ slug }
-						</H1>
-					</AlignCenterDiv>
-				</MarginVerticalView>
+				<AlignCenterDiv>
+					<H1>
+						{ slug }
+					</H1>
+				</AlignCenterDiv>
+				<MarginDiv m={'30px 0'}>
+					<StyledInput 
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
+						type="text" 
+						placeholder='Search for a recipe' 
+						iconLeft={ <IoSearchOutline size={24} color={colors.dark} />} 
+					/> 
+				</MarginDiv>
 
 				<Grid>
 					{ searchedRecipes.length > 0 ?

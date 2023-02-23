@@ -11,7 +11,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import useGetRecipesByName from '../../hooks/api/useGetRecipesByName'
 import RecipeItem from '../../components/RecipeItem'
-import { MarginVerticalView } from '@/styles/layout'
+import { MarginDiv } from '@/styles/layout'
 
 interface CategoryItem {
   'strCategoryThumb': string,
@@ -102,7 +102,7 @@ function Recipes() {
         <RecipesContainer>  
           <main>
 
-            <MarginVerticalView mb={'20px'}>
+            <MarginDiv mb={'20px'}>
               <form method='get' onSubmit={searchRecipe}>
                 <StyledInput
                   value={search}
@@ -113,7 +113,7 @@ function Recipes() {
                 />
                 <button type="submit" hidden></button>
               </form>
-            </MarginVerticalView>
+            </MarginDiv>
 
             {currentScreen === 'categories' ?
               <CategoriesScreen />

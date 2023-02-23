@@ -9,13 +9,17 @@ import getUserInfo from '../services/auth/getUserInfo';
 import { colors } from '../styles/theme';
 
 type Props = {
-  onRecipeItem?: boolean,
-  recipe_id: string
+  recipeItem?: boolean,
+  recipe_id: string,
+  name: string,
+  image_url: string,
 }
 
 const Favorite = ({
-  onRecipeItem,
-  recipe_id
+  recipeItem,
+  recipe_id,
+  name,
+  image_url,
 } : Props) => {
   const ctx = useStateContext();
   const router = useRouter();
@@ -37,7 +41,12 @@ const Favorite = ({
     if (!ctx?.userData?.token) {
       router.push('/login?next='+router.asPath);
     } else {
-      mutate({ recipe_id, token: ctx.userData.token });
+      mutate({ 
+        recipe_id,
+        name,
+        image_url,
+        token: ctx.userData.token 
+      });
 
       const userInfo = await getUserInfo(ctx.userData.token)
         .then(res => {
@@ -66,7 +75,7 @@ const Favorite = ({
       onMouseEnter={() => setIsFilled(true)} 
       onMouseLeave={() => setIsFilled(false)}
       onClick={handleAddFavorite}
-      onRecipeItem={onRecipeItem}
+      recipeItem={recipeItem}
     >
       {isFilled || isFavorite ?
           <Heart size={55} color={ colors.primary } />
@@ -83,7 +92,7 @@ const Favorite = ({
 const HeartBox = styled.div`
     cursor: pointer;
 
-    ${({ onRecipeItem }: { onRecipeItem: boolean | undefined }) => onRecipeItem && css`
+    ${({ recipeItem }: { recipeItem: boolean | undefined }) => recipeItem && css`
       position: absolute;
       top: 0;
       right: 0;

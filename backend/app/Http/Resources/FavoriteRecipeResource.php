@@ -15,7 +15,9 @@ class FavoriteRecipeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'recipe_id' => $this->recipe_id,  
+            'recipe_id' => $this->recipe_id,
+            'name' => $this->recipe->name,
+            'image_url' => $this->recipe->image_url,
         ];
     }
 }

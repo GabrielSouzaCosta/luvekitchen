@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import InputContainer from '../../components/InputContainer'
 import Logo from '../../components/Logo'
-import { ButtonPrimary } from '../../styles/buttons'
-import { FlexRowDiv } from '../../styles/styles'
+import { Button } from '../../styles/buttons'
+import { AlignCenterDiv, FlexRowDiv, FullWidthDiv, MarginDiv } from '../../styles/layout'
 import { AlertText, Callout, H1, P } from '../../styles/texts'
 import { colors } from '../../styles/theme'
-import LoginBgImage from '../../public/images/login-bg.jpg'
+import LoginBgImage from '../../../public/images/login-bg.jpg'
 import { Input, PasswordInput } from '../../styles/inputs'
 import Head from 'next/head'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -18,6 +18,7 @@ import { useRouter } from 'next/router'
 import getUserInfo from '../../services/auth/getUserInfo'
 import { useStateContext } from '../../context/ContextProvider'
 import { LoginData } from '../../@types/AuthTypes'
+import { createKey } from 'next/dist/shared/lib/router/router'
 
 const Login = () => {
   const router = useRouter();
@@ -35,6 +36,7 @@ const Login = () => {
           .catch(err => console.log(err))
 
         ctx?.saveUserSession({ 
+          id: userInfo.id,
           token: response.data.token, 
           name: userInfo.name, 
           avatar_img: userInfo.avatar_img, 
@@ -49,11 +51,16 @@ const Login = () => {
       }
     },
     onError: ({response}) => {
+      console.log(response)
+      response?.data?.message && response.data.message.length < 50 ? 
       setRequestError(response.data.message)
+      :
+      setRequestError('Error on login, try again')
     }
   });
 
   const handleLogin : SubmitHandler<LoginData> = (data) => {
+    console.log('data')
     mutate(data);
   }
 
@@ -66,19 +73,19 @@ const Login = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <FlexRowDiv style={{ height: '100vh', backgroundColor: colors.light, overflowY: 'auto' }}>
+      <FlexRowContent>
           <LeftContentDiv>
-            <div style={{ margin: '20px 0 0 30px' }}>
+            <MarginDiv m={'20px 0 0 30px'}>
               <Logo />
-            </div>
+            </MarginDiv>
           </LeftContentDiv>
-          <div style={{ padding: '0 200px', width: '40%' }}>
-            <LoginForm onSubmit={handleSubmit(handleLogin)} method="post">
+          <FormContainer>
+            <LoginForm onSubmit={handleSubmit(handleLogin)}>
                 <H1>
                   Login
                 </H1>
 
-                <div style={{ width: '100%' }}>
+                <FullWidthDiv>
                   <InputContainer
                     label={'Username'}
                   >
@@ -112,47 +119,60 @@ const Login = () => {
                   {requestError &&
                     <AlertText>
                       <FlexRowDiv>
-                        <RiErrorWarningLine style={{ marginRight: '5px' }} />
+                        <MarginDiv mr={'5px'}>
+                          <RiErrorWarningLine />
+                        </MarginDiv>
                         {requestError}
                       </FlexRowDiv>
                     </AlertText>
                   }
 
                   <Link href="/">
-                    <P>
+                    <P hover>
                       Esqueceu sua senha?
                     </P>
                   </Link>
-                </div>
+                </FullWidthDiv>
 
-                <div style={{textAlign: 'center', width: '100%'}}>
-                  <ButtonPrimary style={{ width: '100%' }} type="submit">
+                <AlignCenterDiv>
+                  <Button style={{ width: '100%' }} type="submit">
                     {isLoading ? 
-                      <FlexRowDiv style={{ textAlign: 'center', justifyContent: 'center' }}>
-                        <span className='loader' style={{ marginRight: '8px' }}></span> 
+                      <FlexRowDiv style={{ textAlign: 'center', justifyContent: 'center', width: '100%' }}>
+                        <MarginDiv mr={'8px'}>
+                          <span className='loader'></span>
+                        </MarginDiv>
                         Logging in.. 
                       </FlexRowDiv>
                      : 
                       'Log in'
                     }
-                  </ButtonPrimary>
+                  </Button>
 
-                  <P style={{ marginTop: '30px', marginBottom: '4px' }}>
-                    Does not have an account yet? 
-                  </P>
+                  <MarginDiv mt={'30px'} mb={'4px'}>
+                    <P>
+                      Does not have an account yet?
+                    </P>
+                  </MarginDiv>
+
                   <Link href="/register">
-                    <AlertText style={{ fontWeight: '500' }}>
+                    <AlertText semibold>
                       Register Now
                     </AlertText>
                   </Link>
-                </div>
+                </AlignCenterDiv>
 
             </LoginForm>
-          </div>
-      </FlexRowDiv>
+          </FormContainer>
+      </FlexRowContent>
     </>
   )
 }
+
+const FlexRowContent = styled(FlexRowDiv)`
+  height: 100vh;
+  background-color: ${p => p.theme.colors.light};
+  overflow-y: auto;
+`
 
 const LeftContentDiv = styled.div`
   background-image: url(${LoginBgImage.src});
@@ -168,6 +188,19 @@ const LeftContentDiv = styled.div`
   }
 `
 
+const FormContainer = styled.div`
+  padding: 0 220px;
+  width: 40%;
+  @media screen and (max-width: 1400px) {
+    padding: 0 100px;
+    width: 50%;
+  }
+  @media screen and (max-width: 968px) {
+    padding: 0 20px;
+    width: 100%;
+  }
+`
+
 export const LoginForm = styled.form`
   width: 100%;
   height: 100%;
@@ -176,6 +209,9 @@ export const LoginForm = styled.form`
   justify-content: center;
   align-items: center;
   row-gap: 30px;
+  @media screen and (max-width: 1400px) {
+      row-gap: 10px;  
+  }
 `
 
 export default Login

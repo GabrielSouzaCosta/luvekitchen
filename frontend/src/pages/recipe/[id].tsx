@@ -6,7 +6,7 @@ import { IoCheckmark, IoEggSharp, IoShare, IoStar } from 'react-icons/io5';
 import styled from 'styled-components';
 import useGetRecipe from '../../hooks/api/useGetRecipe';
 import Layout from '../../layout/Layout'
-import { Container, FlexRowBetweenDiv, FlexRowDiv, MarginHorizontalView, MarginVerticalView, MarginView } from '../../styles/layout';
+import { Container, FlexRowBetweenDiv, FlexRowDiv, MarginDiv } from '../../styles/layout';
 import { H1, H2, H3, H4, H5, ListItem, P, TextMuted } from '../../styles/texts';
 import { colors } from '../../styles/theme';
 import { Rating } from '@mui/material';
@@ -17,6 +17,13 @@ import { ParsedUrlQuery } from 'querystring';
 import { RouteParams } from '../../@types/RouteParams';
 import { BsBookmarkPlus } from 'react-icons/bs';
 import Favorite from '../../components/Favorite';
+import { useStateContext } from '@/context/ContextProvider';
+import { useMutation, useQueryClient } from 'react-query';
+import addCommentToRecipe from '@/services/recipes/addCommentToRecipe';
+import useGetCommentsOfRecipe from '@/hooks/api/useGetCommentsOfRecipe';
+import shareRecipeUrl from '@/services/shareRecipeUrl';
+import { Button } from '@/styles/buttons';
+import Link from 'next/link';
 
 interface Ingredient {
 	ingredient: string,
@@ -27,7 +34,17 @@ const Recipe = () => {
   const router = useRouter();
   const { id } : RouteParams = router.query;
   const { data: recipe, isLoading } = useGetRecipe(id);
+  const { data: comments } = useGetCommentsOfRecipe(id);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const ctx = useStateContext();
+
+  function handleShareRecipe() {
+	  shareRecipeUrl({
+		url: router.asPath,
+		title: recipe?.data.meals['strMeal'],
+		text: '',
+	  })
+  }
   
   useEffect(() => {
 	if (recipe?.data.meals) {
@@ -72,25 +89,26 @@ const Recipe = () => {
 				<FlexContainer>
 					<div>
 						<FlexRowBetweenDiv>
-							<MarginVerticalView mb={'4px'}>
+							<MarginDiv mb={'4px'}>
 								<H1>
 									{ recipe?.data.meals[0]['strMeal'] }
 								</H1>
-							</MarginVerticalView>
+							</MarginDiv>
 							<FlexRowDiv>
-								<MarginHorizontalView ml={'20px'}>
-									<BsBookmarkPlus className="pointer-opacity" size={40} />
-								</MarginHorizontalView>
 								{id &&
-									<MarginHorizontalView ml={'20px'}>
+									<MarginDiv ml={'20px'}>
 										<Favorite
 											recipe_id={id}
+											name={recipe?.data.meals[0]['strMeal']}
+											image_url={recipe?.data.meals[0]['strMealThumb']}
 										/>
-									</MarginHorizontalView>
+									</MarginDiv>
 								}
-								<MarginHorizontalView ml={'20px'}>
-									<IoMdShare className="pointer-opacity" size={40} color={colors.dark} />
-								</MarginHorizontalView>
+								<MarginDiv ml={'20px'}>
+									<button type="button" onClick={handleShareRecipe}>
+										<IoMdShare className="pointer-opacity" size={40} color={colors.dark} />
+									</button>
+								</MarginDiv>
 
 							</FlexRowDiv>
 						</FlexRowBetweenDiv>
@@ -101,9 +119,9 @@ const Recipe = () => {
 							</TextMuted>
 
 							<FlexRowDiv>
-								<MarginHorizontalView mr={'4px'}>
+								<MarginDiv mr={'4px'}>
 									<IoMdGlobe size={36} color={colors['secondary-variant']} />
-								</MarginHorizontalView>
+								</MarginDiv>
 								<P marginSize='none' style={{ color: colors['secondary-variant'] }}>
 									{ recipe?.data.meals[0]['strArea'] }
 								</P>
@@ -114,26 +132,26 @@ const Recipe = () => {
 						<Rating
 							name="half-rating-read" defaultValue={4.5} precision={0.5} readOnly
 						/>
-						<MarginView m={'8px 0 20px 0'}>
+						<MarginDiv m={'8px 0 20px 0'}>
 							<FlexRowDiv>
-								<MarginHorizontalView m={'6px'}>
+								<MarginDiv m={'6px'}>
 									<P style={{ color: colors.primary, borderBottom: `0.5px solid ${colors.primary}` }} marginSize="none">
-										4.5
+										{comments?.data?.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / comments?.data?.length}
 									</P>
-								</MarginHorizontalView>
+								</MarginDiv>
 								<P marginSize={'none'} style={{ color: colors.primary }}>
-									(121)
+									( {comments?.data?.length} {comments?.data?.length > 1 || comments?.data?.length === 0 ? 'reviews': 'review'} )
 								</P>
 							</FlexRowDiv>
-						</MarginView>
+						</MarginDiv>
 
-						<MarginVerticalView mb={'30px'}>
-							<YoutubeVideo width="600" height="415"
+						<MarginDiv mb={'30px'}>
+							<YoutubeVideo
 								src={recipe?.data.meals[0]['strYoutube'].replace('watch?v=', 'embed/')}
 								frameBorder="0"
 								allowFullScreen
 							/>
-						</MarginVerticalView>
+						</MarginDiv>
 
 						<H3>
 							Instructions
@@ -142,8 +160,8 @@ const Recipe = () => {
 							{ recipe?.data.meals[0]['strInstructions'] }
 						</P>
 
-						<MarginVerticalView m={'30px'}>
-							<FlexRowBetweenDiv>
+						<MarginDiv m={'30px 0'}>
+							<FlexRowBetweenDiv responsive>
 								<div>
 									<H4 style={{ color: colors['primary-variant'] }}>
 										Ingredients
@@ -174,42 +192,45 @@ const Recipe = () => {
 									/>
 								</ImageContainer>
 							</FlexRowBetweenDiv>
-						</MarginVerticalView>
+						</MarginDiv>
 
 						<H5>
-							Reviews (121)
+							Reviews ({comments?.data?.length})
 						</H5>
+						
+						{/* Create new review */}
+						{ctx?.userData?.token && !comments?.data?.some(item => item.user_id === ctx?.userData?.id) &&
+							<ReviewItem
+								recipe={recipe?.data.meals[0]}
+								isCreate
+								user={ctx?.userData?.name}
+								userImage={require('../../../public/avatars/'+ctx?.userData?.avatar_img)}
+							/>
+						}
 
-						<ReviewItem 
-							rating={4}
-							user={'Gabriel Souza'}
-							userImage={AvatarMasc1}
-							date={'12/01/2022'}
-							review={'Excellent meal for dinner'}
-						/>
+						{!ctx?.userData?.token &&
+							<MarginDiv mb={'20px'}>
+								<Link href={'/login?next='+router.asPath}>
+									<Button textSmall maxWidth="220px">
+										Log in to add a comment
+									</Button>
+								</Link>
+							</MarginDiv>
+						}
 
-						<ReviewItem 
-							rating={5}
-							user={'Joyce Anders'}
-							userImage={AvatarFem1}
-							date={'13/01/2022'}
-							review={'I really liked this dish, very tasty!'}
-						/>
+						{comments?.data?.map(item => {
+								return (
+									<ReviewItem 
+										rating={item.rating}
+										user={item.user_name}
+										userImage={require('../../../public/avatars/'+item.user_image)}
+										date={item.created_at}
+										review={item.comment}
+									/>
+								)
+							})
+						}
 
-						<ReviewItem 
-							rating={2.5}
-							user={'Karen'}
-							userImage={AvatarFem2}
-							date={'13/01/2022'}
-							review={'Disgusting!!'}
-						/>
-
-						<ReviewItem 
-							rating={5}
-							user={'Robert'}
-							userImage={AvatarMasc2}
-							date={'14/01/2022'}
-						/>
 
 					</div>
 				</FlexContainer>
@@ -221,12 +242,19 @@ const Recipe = () => {
 
 const RecipeContainer = styled(Container)`
     width: 100%;
-	padding: 40px 0;
+	padding: 4px 20px;
+	overflow: hidden;
 `
 
 const YoutubeVideo = styled.iframe`
 	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 	border-radius: 6px;
+	max-width: 600px;
+	width: 100%;
+	height: 410px;
+	@media screen and (max-width: 968px) {
+        height: 220px;
+    }
 `
 
 const FlexContainer = styled.div`
@@ -249,11 +277,20 @@ const ImageContainer = styled.div`
 	img {
 		border-radius: 50%;
 	}
+	@media screen and (max-width: 968px) {
+        width: 200px;
+		height: 200px;
+		align-self: center;
+    }
 `
 
 const IngredientsList = styled.ul`
 	list-style-type: disc;
 	list-style-position: inside;
+`
+
+const MakeReviewForm = styled.form`
+	margin: 16px 0;
 `
 
 

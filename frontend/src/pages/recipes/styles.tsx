@@ -10,6 +10,7 @@ type ImageProps = {
     src: string,
     name: string,
     href: string,
+    recipe?: boolean,
 }
 
 const StyledImageDiv = styled.div`
@@ -22,6 +23,10 @@ const StyledImageDiv = styled.div`
         background-color: ${colors.secondary};
         transition: all 250ms;
     }
+    @media screen and (max-width: 968px) {
+        max-width: 200px;
+        height: ${(p : ImageProps) => p.recipe ? '120px': '150px'};
+    }
 `
 
 const StyledCategoryCard = styled(StyledImageDiv)`
@@ -31,6 +36,9 @@ const StyledCategoryCard = styled(StyledImageDiv)`
     &:hover > a > div {
         background-color: ${colors.primary};
         transition: all 250ms;
+    }
+    @media screen and (max-width: 968px) {
+        flex-basis: 45%;
     }
 `
 
@@ -59,7 +67,7 @@ const RandomRecipeCardBox = styled(CategoryCardBox)`
 
 export const RecipesContainer = styled(Container)`
     width: 100%;
-    padding: 40px 0;
+    padding: 40px 10px;
 `
 
 export const CategoriesGrid = styled.div`
@@ -69,10 +77,13 @@ export const CategoriesGrid = styled.div`
     row-gap: 30px; 
     justify-content: center;
     justify-items: center;
+    @media screen and (max-width: 968px) {
+        row-gap: 15px;
+    }
 `
 
 export const RecipeCard = ({ href, src, name } : ImageProps) => (
-    <StyledImageDiv>
+    <StyledImageDiv recipe>
         <Link href={href}>
             <Image
                 style={{ objectFit: 'cover', borderRadius: '6px' }}
@@ -92,12 +103,12 @@ export const RecipeCard = ({ href, src, name } : ImageProps) => (
 export const CategoryCard = ({ href, src, name } : ImageProps) => (
     <StyledCategoryCard>
         <Link href={href}>
-                <Image
-                    style={{ objectFit: 'cover', borderRadius: '4px' }}
-                    src={src}
-                    fill
-                    alt={name}
-                />
+            <Image
+                style={{ objectFit: 'cover', borderRadius: '4px' }}
+                src={src}
+                fill
+                alt={name}
+            />
             <CategoryCardBox>
                 <Callout>
                     { name }
@@ -124,4 +135,10 @@ export const Grid = styled.div`
 	grid-row-gap: 20px; 
 	min-height: 0; 
  	min-width: 0;
+    @media screen and (max-width: 1400px) {
+         grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 968px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 `

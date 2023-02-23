@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import InputContainer from '../../components/InputContainer'
 import Logo from '../../components/Logo'
-import { ButtonPrimary, ButtonSecondary, PrimaryToggleButton, SecondaryToggleButton } from '../../styles/buttons'
-import { FlexRowDiv } from '../../styles/styles'
-import { AlertText, H1, P } from '../../styles/texts'
+import { Button, PrimaryToggleButton, SecondaryToggleButton } from '../../styles/buttons'
+import { FlexRowDiv, AlignCenterDiv, MarginDiv, FullWidthDiv } from '../../styles/layout'
+import { AlertText, H1, P, Caption } from '../../styles/texts'
 import { colors } from '../../styles/theme'
-import LoginBgImage from '../../public/images/login-bg.jpg'
+import RegisterBgImage from '../../../public/images/register-bg.jpg'
 import { Input, PasswordInput } from '../../styles/inputs'
 import Head from 'next/head'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
@@ -64,19 +64,20 @@ const Register = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <FlexRowDiv style={{ height: '100vh', backgroundColor: colors.light }}>
-          <LeftContentDiv>
-            <div style={{ margin: '20px 0 0 30px' }}>
-              <Logo />
-            </div>
-          </LeftContentDiv>
-          <div>
+      <FlexRowContent>
+        <LeftContentDiv>
+          <MarginDiv mt={'20px'} ml={'30px'}>
+            <Logo />
+          </MarginDiv>
+        </LeftContentDiv>
+
+        <FormContainer>
             <RegisterForm onSubmit={handleSubmit(handleRegister)} method='post'>
                 <H1>
                   Register
                 </H1>
 
-                <div style={{ width: '100%' }}>
+                <FullWidthDiv>
                   <InputContainer
                     label={'Name'}
                   >
@@ -95,7 +96,7 @@ const Register = () => {
                   <InputContainer
                     label={"Gender"}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', columnGap: '10px' }}>
+                    <FlexRowDiv columnGap='10px'>
                       <Controller
                         control={control}
                         name="gender"
@@ -121,7 +122,7 @@ const Register = () => {
                             />
                           }
                       />
-                    </div>
+                    </FlexRowDiv>
                   </InputContainer>
 
                   <InputContainer
@@ -129,7 +130,7 @@ const Register = () => {
                   >
                     <Input 
                       type="text"
-                      placeholder="CordonBleuChef"
+                      placeholder="CordonBleuChef@chef.com"
                       register={register}
                       name="email"
                       validationSchema={{ required: true }}
@@ -178,13 +179,13 @@ const Register = () => {
                     </AlertText>
                   }
 
-                  <P>
+                  <Caption>
                     Your password must contain at least 8 characters
-                  </P>
-                </div>
+                  </Caption>
+                </FullWidthDiv>
 
-                <div style={{textAlign: 'center', width: '100%'}}>
-                  <ButtonPrimary style={{ width: '100%' }} type="submit">
+                <AlignCenterDiv>
+                  <Button type="submit">
                     {isLoading ? 
                       <FlexRowDiv style={{ textAlign: 'center', justifyContent: 'center' }}>
                         <span className='loader' style={{ marginRight: '8px' }}></span> 
@@ -192,47 +193,69 @@ const Register = () => {
                           Registering.. 
                         </span>
                       </FlexRowDiv>
-                     : 
+                      : 
                       'Register'
                     }
-                  </ButtonPrimary>
+                  </Button>
 
                   
-                  <div style={{ marginTop: '30px' }}>
-                    <P style={{ marginBottom: '4px', display: 'inline' }}>
-                      Looking for the
-                    </P>
-                    <Link href="/login">
-                      <AlertText style={{ display: 'inline', marginLeft: '4px', textDecoration: 'underline' }}>
-                          Login Page?
-                        </AlertText>
-                    </Link>
-                  </div>
-                </div>
+                  <MarginDiv mt={'25px'}>
+                    <MarginDiv mb={'2px'}>
+                      <P>
+                        Looking for the
+                        <Link href="/login">
+                          <AlertText style={{ display: 'inline', marginLeft: '4px' }} semibold>
+                              Login Page?
+                          </AlertText>
+                        </Link>
+                      </P>
+                    </MarginDiv>
+                  </MarginDiv>
+                </AlignCenterDiv>
 
 
             </RegisterForm>
-          </div>
-      </FlexRowDiv>
+        </FormContainer>
+      </FlexRowContent>
+        
     </>
   )
 }
 
 const LeftContentDiv = styled.div`
-  background-image: url(${LoginBgImage.src});
+  background-image: url(${RegisterBgImage.src});
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #191919;
-  background-position-x: 20%;
   height: 100%;
-  max-width: 50%;
+  max-width: 45%;
   width: 100%;
   @media screen and (max-width: 768px) {
     display: none
   }
 `
 
-export const RegisterForm = styled.form`
+
+const FlexRowContent = styled(FlexRowDiv)`
+  height: 100vh;
+  background-color: ${p => p.theme.colors.light};
+  overflow-y: auto;
+`
+
+const FormContainer = styled.div`
+  padding: 0 6px;
+  margin: 0 auto;
+  width: 30%;
+  @media screen and (max-width: 1400px) {
+    width: 50%;
+    padding: 0 60px;
+  }
+  @media screen and (max-width: 968px) {
+    padding: 0 4px;
+  }
+`
+
+const RegisterForm = styled.form`
   width: 100%;
   height: 100%;
   display: flex;
@@ -240,6 +263,9 @@ export const RegisterForm = styled.form`
   justify-content: center;
   align-items: center;
   row-gap: 30px;
+  @media screen and (max-width: 1400px) {
+    row-gap: 4px; 
+  }
 `
 
 export default Register

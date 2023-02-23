@@ -50,6 +50,10 @@ const UserMenuDiv = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  @media screen and (max-width: 768px) {
+      margin-left: auto;
+      margin-right: 10px;
+  }
 `;
 
 const fadeIn = keyframes`
