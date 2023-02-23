@@ -39,9 +39,6 @@ const ReviewItem = ({
     onSuccess: function(data) {
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ['recipe_comments'] })
-    },
-    onError: function(err) {
-      console.log(err?.response?.data);
     }
   })
 

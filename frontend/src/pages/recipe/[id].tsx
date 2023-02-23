@@ -220,7 +220,8 @@ const Recipe = () => {
 
 						{comments?.data?.map(item => {
 								return (
-									<ReviewItem 
+									<ReviewItem
+										key={item.created_at}
 										rating={item.rating}
 										user={item.user_name}
 										userImage={require('../../../public/avatars/'+item.user_image)}

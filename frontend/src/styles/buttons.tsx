@@ -4,7 +4,8 @@ import { colors } from "./theme"
 type Props = {
     variant?: string | undefined,
     theme?: any,
-    textSmall?: boolean
+    textSmall?: boolean,
+    maxWidth?: string,
 }   
 
 export const Button = styled.button`

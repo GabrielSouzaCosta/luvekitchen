@@ -1,4 +1,4 @@
-export default function({
+export default async function({
     url,
     title,
     text
