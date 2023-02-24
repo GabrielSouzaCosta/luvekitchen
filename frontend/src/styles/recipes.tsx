@@ -1,10 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
 import styled from "styled-components"
-import { Input } from "../../styles/inputs"
-import { Container } from "../../styles/layout"
-import { Callout, H2, H3 } from "../../styles/texts"
-import { colors } from "../../styles/theme"
+import { Input } from "./inputs"
+import { Container } from "./layout"
+import { Callout, H2, H3 } from "./texts"
+import { colors } from "./theme"
 
 type ImageProps = {
     src: string,

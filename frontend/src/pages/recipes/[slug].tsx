@@ -9,7 +9,7 @@ import useGetRecipes from '../../hooks/api/useGetRecipes';
 import Layout from '../../layout/Layout'
 import { H1 } from '../../styles/texts';
 import { colors } from '../../styles/theme';
-import { RecipesContainer, StyledInput, Grid } from './styles';
+import { RecipesContainer, StyledInput, Grid } from '../../styles/recipes';
 
 const RecipesCategory = () => {
   const router = useRouter();

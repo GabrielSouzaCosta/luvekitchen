@@ -130,17 +130,21 @@ const Recipe = () => {
 
 
 						<Rating
-							name="half-rating-read" defaultValue={4.5} precision={0.5} readOnly
+							name="half-rating-read" 
+							defaultValue={comments?.data?.length ? (comments?.data?.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / comments?.data?.length ) : 0} 
+							precision={0.5} 
+							readOnly
 						/>
 						<MarginDiv m={'8px 0 20px 0'}>
 							<FlexRowDiv>
 								<MarginDiv m={'6px'}>
 									<P style={{ color: colors.primary, borderBottom: `0.5px solid ${colors.primary}` }} marginSize="none">
-										{comments?.data?.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / comments?.data?.length}
+										{ comments?.data?.length ? (comments?.data?.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / comments?.data?.length ) : '0' }
 									</P>
 								</MarginDiv>
 								<P marginSize={'none'} style={{ color: colors.primary }}>
-									( {comments?.data?.length} {comments?.data?.length > 1 || comments?.data?.length === 0 ? 'reviews': 'review'} )
+									( {comments?.data?.length ? comments?.data?.length : '0 '}
+									{comments?.data?.length > 1 || comments?.data?.length === 0 ? 'reviews': 'review'} )
 								</P>
 							</FlexRowDiv>
 						</MarginDiv>

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Container } from "../../styles/layout"
+import { Container } from "./layout"
 import { IoLogoGithub, IoLogoInstagram, IoLogoLinkedin, IoMailOutline } from 'react-icons/io5'
 import Link from "next/link"
 

@@ -7,7 +7,7 @@ import { IoLogoGithub, IoLogoInstagram, IoLogoLinkedin, IoMailOutline } from 're
 import styled from 'styled-components'
 import Layout from '../../layout/Layout'
 import { H3, H4, P } from '../../styles/texts'
-import { AboutContainer, SocialIcons } from './styles'
+import { AboutContainer, SocialIcons } from '../../styles/about'
 
 const About = () => {
   return (

@@ -9,7 +9,7 @@ import { useStateContext } from '../../context/ContextProvider'
 import Layout from '../../layout/Layout'
 import { Container, FlexColumnCenteredDiv, FlexRowDiv, MarginDiv } from '../../styles/layout'
 import { AlertText, H1, H2 } from '../../styles/texts'
-import { Grid } from '../recipes/styles'
+import { Grid } from '../../styles/recipes'
 
 const Profile = () => {
   const router = useRouter();

@@ -42,24 +42,26 @@ const ReviewItem = ({
     }
   })
 
-  function handleAddComment(e) {
+  function handleAddComment(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault();
-      addCommentMutate({
-        recipe_id: recipe['idMeal'],
-        name: recipe['strMeal'],
-        image_url: recipe['strMealThumb'],
-        comment,
-        rating: reviewRating,
-        token: ctx?.userData?.token
-      })
+      if (ctx?.userData?.token && isCreate) {
+          addCommentMutate({
+            recipe_id: recipe['idMeal'],
+            name: recipe['strMeal'],
+            image_url: recipe['strMealThumb'],
+            comment,
+            rating: reviewRating,
+            token: ctx.userData.token
+          })
+      }
   }
 
   return (
     <ReviewCard>
-        <form onSubmit={isCreate && handleAddComment}>
+        <form onSubmit={handleAddComment}>
             <FlexRowDiv>
                 <UserImage
-                    src={userImage}
+                    src={userImage ? userImage : ''}
                     width={80}
                     height={80}
                     alt=""
