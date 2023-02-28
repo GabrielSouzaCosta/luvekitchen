@@ -26,14 +26,14 @@ function Navbar() {
             <Logo />
             <List>
               <li>
-                <Link href='/recipes'>
+                <NavLink active={currRoute === '/'} href='/'>
                   Recipes
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link href='/about'>
+                <NavLink active={currRoute === '/about'} href='/about'>
                   About
-                </Link>
+                </NavLink>
               </li>
             </List>
             {ctx && ctx.userData?.token ? 
@@ -66,14 +66,14 @@ function Navbar() {
       <Aside isOpen={isSidebarOpen}>
         <AsideList>
               <li>
-                <Link href='/recipes'>
+                <NavLink active={currRoute === '/'} href='/'>
                   Recipes
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link href='/about'>
+                <NavLink active={currRoute === '/about'} href='/about'>
                   About
-                </Link>
+                </NavLink>
               </li>
               
               <li>
@@ -137,15 +137,16 @@ const LoginButton = styled(Button)`
 const List = styled.ul`
   display: flex;
   column-gap: 200px;
-  > li > a {
-    color: ${p => p.theme.colors.dark};
-    transition: all 200ms;
-    &:hover {
-      color: ${p => p.theme.colors.primary}
-    }
-  }
   @media screen and (max-width: 768px) {
     display: none;
+  }
+`
+
+const NavLink = styled(Link)`
+  color: ${p => p.active ? p.theme.colors.primary : p.theme.colors.dark};
+  transition: all 200ms;
+  &:hover {
+    color: ${p => p.theme.colors.primary}
   }
 `
 
@@ -174,13 +175,6 @@ const AsideList = styled(List)`
   column-gap: 0;
   align-items: center;
   justify-content: center;
-  > li > a {
-    color: ${p => p.theme.colors.dark};
-    transition: all 200ms;
-    &:hover {
-      color: ${p => p.theme.colors.primary}
-    }
-  }
   @media screen and (max-width: 768px) {
     display: flex;
   }

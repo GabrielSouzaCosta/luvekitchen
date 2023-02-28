@@ -6,7 +6,6 @@ import Logo from '../../components/Logo'
 import { Button, PrimaryToggleButton, SecondaryToggleButton } from '../../styles/buttons'
 import { FlexRowDiv, AlignCenterDiv, MarginDiv, FullWidthDiv, ShowOnlyMobileDiv } from '../../styles/layout'
 import { AlertText, H1, P, Caption } from '../../styles/texts'
-import { colors } from '../../styles/theme'
 import RegisterBgImage from '../../../public/images/register-bg.jpg'
 import { Input, PasswordInput } from '../../styles/inputs'
 import Head from 'next/head'
@@ -18,7 +17,6 @@ import { useRouter } from 'next/router'
 import { useStateContext } from '../../context/ContextProvider'
 import getUserInfo from '../../services/auth/getUserInfo'
 import { RegisterData } from '../../@types/AuthTypes'
-import { AppContextInterface } from '../../@types/context'
 
 const Register = () => {
   const router = useRouter();

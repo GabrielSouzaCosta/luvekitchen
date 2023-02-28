@@ -15,7 +15,7 @@ function Footer() {
 
           <List>
               <li>
-                <Link href='/recipes'>
+                <Link href='/'>
                   Recipes
                 </Link>
               </li>

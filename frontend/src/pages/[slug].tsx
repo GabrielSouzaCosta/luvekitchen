@@ -3,13 +3,12 @@ import Head from 'next/head';
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { IoSearchOutline } from 'react-icons/io5';
-import styled from 'styled-components';
-import RecipeItem from '../../components/RecipeItem';
-import useGetRecipes from '../../hooks/api/useGetRecipes';
-import Layout from '../../layout/Layout'
-import { H1 } from '../../styles/texts';
-import { colors } from '../../styles/theme';
-import { RecipesContainer, StyledInput, Grid } from '../../styles/recipes';
+import RecipeItem from '../components/RecipeItem';
+import useGetRecipes from '../hooks/api/useGetRecipes';
+import Layout from '../layout/Layout'
+import { H1 } from '../styles/texts';
+import { colors } from '../styles/theme';
+import { RecipesContainer, StyledInput, Grid } from '../styles/recipes';
 
 const RecipesCategory = () => {
   const router = useRouter();

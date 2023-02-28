@@ -1,9 +1,7 @@
 import { AlignCenterDiv } from '@/styles/layout'
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
-import { IoLogoGithub, IoLogoInstagram, IoLogoLinkedin, IoMailOutline } from 'react-icons/io5'
 import styled from 'styled-components'
 import Layout from '../../layout/Layout'
 import { H3, H4, P } from '../../styles/texts'
@@ -26,7 +24,7 @@ const About = () => {
               </H3>
             
               <P>
-                <strong>Luv&amp;Kitchen</strong> has the main objective to make people who are stressed from everyday relax while seeing lots of funny, cute and amazing cats. In addition, we want to provide you with interesting facts about these fellow animals.
+                Welcome to <strong>Luv&amp;Kitchen</strong>! We offer a diverse collection of recipes from all over the world, so you can explore new cuisines and flavors right from your own kitchen. Our recipes are easy to follow and guaranteed to satisfy your cravings. Happy cooking!
               </P>
 
               <ImageDiv>

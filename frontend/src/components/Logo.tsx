@@ -6,11 +6,9 @@ import LogoSrc from '../../public/images/logo.png'
 
 const Logo = () => {
   return (
-    <Link href="/">
-      <RelativeDiv>
-        <Image src={LogoSrc} style={{ objectFit: 'contain' }} fill alt="" />
-      </RelativeDiv>
-    </Link>
+    <RelativeDiv>
+      <Image src={LogoSrc} style={{ objectFit: 'contain' }} fill alt="" />
+    </RelativeDiv>
   )
 }
 
