@@ -9,6 +9,8 @@ import { useStateContext } from '../../context/ContextProvider';
 import UserMenu from './UserMenu';
 import { Twirl as Hamburger } from 'hamburger-react'
 import { colors } from '@/styles/theme';
+import { IoExitOutline, IoExitSharp } from 'react-icons/io5';
+import { FaArrowCircleRight } from 'react-icons/fa';
 
 function Navbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -34,7 +36,7 @@ function Navbar() {
                 </Link>
               </li>
             </List>
-            {ctx && ctx.userData ? 
+            {ctx && ctx.userData?.token ? 
               <UserMenu
                 avatar_img={ctx.userData.avatar_img}
                 name={ctx.userData.name}
@@ -49,8 +51,8 @@ function Navbar() {
                 </Link>
               </LoginDiv>
             }
-            <HamburgerDiv className="block lg:hidden z-40">
-                <Hamburger 
+            <HamburgerDiv>
+                <Hamburger
                   toggled={isSidebarOpen}
                   toggle={() => setIsSidebarOpen(!isSidebarOpen)}
                   color={colors.primary}
@@ -73,12 +75,15 @@ function Navbar() {
                   About
                 </Link>
               </li>
+              
               <li>
+                {!ctx?.userData?.token &&
                 <Link href="/login">
                   <LoginButton type="button">
                     Login
                   </LoginButton>
                 </Link>
+                }
               </li>
         </AsideList>
       </Aside>
@@ -121,6 +126,9 @@ const LoginDiv = styled.div`
 
 const LoginButton = styled(Button)`
   padding: 8px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @media screen and (max-width: 768px) {
     padding: 6px 40px;   
   }
@@ -159,13 +167,23 @@ const Aside = styled.aside`
     display: flex;
   }
 `
-const AsideList = styled.ul`
+const AsideList = styled(List)`
   width: 100%;
-  display: flex;
   flex-direction: column;
   row-gap: 20px;
+  column-gap: 0;
   align-items: center;
   justify-content: center;
+  > li > a {
+    color: ${p => p.theme.colors.dark};
+    transition: all 200ms;
+    &:hover {
+      color: ${p => p.theme.colors.primary}
+    }
+  }
+  @media screen and (max-width: 768px) {
+    display: flex;
+  }
 `
 
 export default Navbar

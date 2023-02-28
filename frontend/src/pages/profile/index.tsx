@@ -16,12 +16,11 @@ const Profile = () => {
   const ctx = useStateContext();
 
   useEffect(() => {
-    if (!ctx?.userData) {
+    if (!ctx?.userData?.token) {
       router.push('login');
     }
   }, [])
 
-  console.log(ctx?.userData?.favorites)
 
   return (
     <>
@@ -35,7 +34,7 @@ const Profile = () => {
         <ProfileContainer>
           <FlexColumnCenteredDiv>
             <Image
-              src={require('../../../public/avatars/'+ctx?.userData?.avatar_img)}
+              src={ctx?.userData?.avatar_img ? require('../../../public/avatars/'+ctx?.userData?.avatar_img) : ''}
               alt=""
               width={200}
               height={200}

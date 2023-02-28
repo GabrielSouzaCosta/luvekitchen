@@ -9,6 +9,7 @@ import getUserInfo from '../services/auth/getUserInfo';
 import { colors } from '../styles/theme';
 
 type Props = {
+  heartSmall?: boolean,
   recipeItem?: boolean,
   recipe_id: string,
   name: string,
@@ -16,6 +17,7 @@ type Props = {
 }
 
 const Favorite = ({
+  heartSmall,
   recipeItem,
   recipe_id,
   name,
@@ -29,12 +31,20 @@ const Favorite = ({
 
   const { mutate } = useMutation(addRecipeToFavorites, {
     onSuccess: async (response) => {
-      console.log(response);
-      setIsFavorite(true)
+      setIsFavorite(true);
+      const userInfo = await getUserInfo(ctx?.userData?.token)
+        .then(res => {
+            return res?.data.data
+        })
+
+      ctx?.saveUserSession({ 
+        id: userInfo.id,
+        token: ctx.userData.token,
+        name: userInfo.name, 
+        avatar_img: userInfo.avatar_img, 
+        favorites: userInfo.favorites 
+      })
     },
-    onError: ({response}) => {
-      console.log(response)
-    }
   });
 
   async function handleAddFavorite() {
@@ -47,19 +57,6 @@ const Favorite = ({
         image_url,
         token: ctx.userData.token 
       });
-
-      const userInfo = await getUserInfo(ctx.userData.token)
-        .then(res => {
-            return res?.data.data
-        })
-        .catch(err => console.log(err))
-
-        ctx?.saveUserSession({ 
-          token: ctx.userData.token,
-          name: userInfo.name, 
-          avatar_img: userInfo.avatar_img, 
-          favorites: userInfo.favorites 
-        })
     }
   }  
 
@@ -67,6 +64,8 @@ const Favorite = ({
     const favorites = ctx?.userData?.favorites?.map(item => item.recipe_id.toString());
     if ( favorites?.includes(recipe_id) ) {
       setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
     }
   }, [ctx])
 
@@ -78,10 +77,10 @@ const Favorite = ({
       recipeItem={recipeItem}
     >
       {isFilled || isFavorite ?
-          <Heart size={55} color={ colors.primary } />
+          <Heart size={heartSmall ? 35 : 50} color={ colors.primary } />
           :
           <HeartEmpty 
-              size={55} 
+              size={heartSmall ? 35 : 50} 
               color={ colors.primary }
           />
       }

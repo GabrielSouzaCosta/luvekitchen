@@ -86,3 +86,10 @@ export const MarginDiv = styled.div`
         margin-right: ${p.mr};
     `}
 `
+
+export const ShowOnlyMobileDiv = styled(MarginDiv)`
+    display: none;
+    @media screen and (max-width: 768px) {
+        display: block;
+    }   
+`

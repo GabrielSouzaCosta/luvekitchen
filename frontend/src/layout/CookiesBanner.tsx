@@ -1,4 +1,7 @@
+import { Button } from '@/styles/buttons';
+import { P } from '@/styles/texts';
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components';
 
 const CookiesBanner = () => {
   const [consented, setConsented] = useState(false);
@@ -20,19 +23,62 @@ const CookiesBanner = () => {
     }
   }, [])
 
-  if (consented || !loaded) return <div className='hidden'></div>;
+  if (consented || !loaded) return <div></div>;
   return (
-    <div className='fixed inset-x-0 bottom-0 z-50 bg-light dark:bg-dark text-dark dark:text-light rounded-t-3xl py-3 -drop-shadow-2xl w-full lg:w-1/2 mx-auto transitiona-all duration-300'>
-        <div className="container px-4 text-center">
-            <p className='text-sm lg:text-md'>
-                This website does not use cookies. We respect your privacy and do not store any information about your visit on our servers.
-            </p>
-            <button onClick={consentCookiesPolicy} className='lg:text-xl bg-dark dark:bg-light rounded-3xl text-light dark:text-dark px-5 py-1 mt-2 font-bold hover:text-primary hover:drop-shadow-2xl dark:hover:bg-primary dark:hover:text-light transition-all duration-500'>
+    <CookiesContainer>
+        <Inner>
+            <Message>
+              Welcome to our website! We use essential cookies to ensure that our website functions properly.
+            </Message>
+            <Button textSmall onClick={consentCookiesPolicy}>
                 I understand
-            </button>
-        </div>
-    </div>
+            </Button>
+        </Inner>
+    </CookiesContainer>
   )
 }
+
+const CookiesContainer = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background-color: ${p => p.theme.colors.white};
+  border-top-left-radius: 1000px;
+  border-top-right-radius: 1000px;
+  box-shadow: -2px 0 10px rgba(30, 30, 30, 0.15);
+  margin: 0 auto;
+  transition: all 200ms;
+  width: 66%;
+  @media screen and (max-width: 968px) {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+`
+
+const Inner = styled.div`
+  margin: 0 auto;
+  text-align: center;
+  padding: 18px 20px;
+  @media screen and (max-width: 968px) {
+    padding: 10px 8px;
+  }
+`
+
+const Message = styled(P)`
+  margin: 0 auto;
+  margin-bottom: 10px;
+  color: ${p => p.theme.colors.dark};
+  font-size: 16px;
+  font-weight: 600;
+  max-width: 75%;
+  width: 100%;
+  @media screen and (max-width: 968px){
+    font-size: 10px;
+    max-width: 75%;
+  }
+`
 
 export default CookiesBanner

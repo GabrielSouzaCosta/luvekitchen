@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../layout/Layout'
 import { IoSearchOutline } from 'react-icons/io5'
 import { colors } from '../../styles/theme'
-import { H2 } from '../../styles/texts'
+import { H2, P } from '../../styles/texts'
 import Link from 'next/link'
 import useGetRandomRecipe from '../../hooks/api/useGetRandomRecipe'
 import useGetRecipeCategories from '../../hooks/api/useGetRecipeCategories'
@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import useGetRecipesByName from '../../hooks/api/useGetRecipesByName'
 import RecipeItem from '../../components/RecipeItem'
 import { MarginDiv } from '@/styles/layout'
+import Image from 'next/image'
 
 interface CategoryItem {
   'strCategoryThumb': string,
@@ -25,19 +26,28 @@ function Recipes() {
   const [currentScreen, setCurrentScreen] = useState< 'categories' | 'search' >('categories');
   const [search, setSearch] = useState('');
   const { data: searchedRecipes, isLoading: isSearchedRecipesLoading, isRefetching, refetch } = useGetRecipesByName(search);
+  const [ recipesNotFound, setRecipesNotFound ] = useState(false);
 
   function searchRecipe(e : React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     refetch();
-    setCurrentScreen('search')
-  }
+    setCurrentScreen('search');
+  };
+
+  useEffect(() => {
+    if (!searchedRecipes?.data?.meals && !isSearchedRecipesLoading) {
+      setRecipesNotFound(true)
+    } else {
+      setRecipesNotFound(false)
+    }
+  }, [searchedRecipes])
   
   const CategoriesScreen = () => (
     <>
       <H2 style={{ textAlign: 'center' }} marginSize='md'>
           What about this Recipe?
       </H2>
-      <RecipeCard 
+      <RecipeCard
         href={`/recipe/${randomRecipe?.data?.meals[0]['idMeal']}`}
         src={randomRecipe?.data?.meals[0]['strMealThumb']} 
         name={randomRecipe?.data?.meals[0]['strMeal']}
@@ -64,17 +74,30 @@ function Recipes() {
   )
 
   const SearchScreen = () => {
-    if (!searchedRecipes?.data?.meals && !isSearchedRecipesLoading) return <div>
-      <p>
-        No Recipes found
-      </p>
+    if (recipesNotFound) return <div>
+      <div style={{ marginTop: '20vh', textAlign: 'center' }}>
+        <Image 
+          src={require("../../../public/images/not_found_recipe.png")}
+          alt=""
+          width={200}
+        />
+        <P>
+          No Recipes found
+        </P>
+      </div>
     </div>
+    else if (isSearchedRecipesLoading) return (
+      <P>
+        Loading recipes..
+      </P>
+    )
     return (
       <Grid>
-      {searchedRecipes?.data?.meals
-        .map((item) => {
+      {searchedRecipes?.data?.meals?
+        .map((item: any) => {
           return (
             <RecipeItem
+              favoriteInItem
               recipe_id={item['idMeal']}
               key={item['idMeal']}
               name={item['strMeal']}
@@ -98,7 +121,7 @@ function Recipes() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
+      <Layout contentTop>
         <RecipesContainer>  
           <main>
 

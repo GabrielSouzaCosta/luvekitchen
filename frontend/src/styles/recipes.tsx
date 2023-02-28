@@ -30,6 +30,8 @@ const StyledImageDiv = styled.div`
 `
 
 const StyledCategoryCard = styled(StyledImageDiv)`
+    max-width: 400px;
+    height: 300px;
     width: 100%;
     margin: unset;
     position: relative;
@@ -38,7 +40,8 @@ const StyledCategoryCard = styled(StyledImageDiv)`
         transition: all 250ms;
     }
     @media screen and (max-width: 968px) {
-        flex-basis: 45%;
+        max-width: 200px;
+        height: 180px;
     }
 `
 
@@ -68,22 +71,26 @@ const RandomRecipeCardBox = styled(CategoryCardBox)`
 export const RecipesContainer = styled(Container)`
     width: 100%;
     padding: 40px 10px;
+    align-self: center;
 `
 
 export const CategoriesGrid = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 20px;
-    row-gap: 30px; 
-    justify-content: center;
+    display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-column-gap: 40px;
+	grid-row-gap: 30px; 
     justify-items: center;
+    margin: 0 auto;
+    width: 100%;
     @media screen and (max-width: 968px) {
-        row-gap: 15px;
+        grid-column-gap: 20px;
+    	grid-row-gap: 30px; 
+    	grid-template-columns: repeat(2, 1fr);
     }
 `
 
-export const RecipeCard = ({ href, src, name } : ImageProps) => (
-    <StyledImageDiv recipe>
+export const RecipeCard = ({ href, src, name, recipe } : ImageProps) => (
+    <StyledImageDiv recipe={recipe}>
         <Link href={href}>
             <Image
                 style={{ objectFit: 'cover', borderRadius: '6px' }}
@@ -121,6 +128,9 @@ export const CategoryCard = ({ href, src, name } : ImageProps) => (
 export const StyledH3 = styled(H3)`
     text-align: center;
     margin-top: 50px;
+    @media screen and (max-width: 768px) {
+        margin-top: 30px;
+    }
 `
 
 export const StyledInput = styled(Input)`

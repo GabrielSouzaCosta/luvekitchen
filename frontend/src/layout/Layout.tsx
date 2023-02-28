@@ -5,18 +5,22 @@ import Footer from './Footer'
 import Navbar from './Navbar'
 
 type Props = {
-    children: React.ReactNode
+    children: React.ReactNode,
+    contentTop?: boolean
 }
 
-const Layout = ({ children } : Props) => {
+const Layout = ({ children, contentTop } : Props) => {
   return (
-    <LayoutContainer>
-        <Navbar />
-          <div style={{ display: 'flex' }}>
+    <>
+      <LayoutContainer>
+          <Navbar />
+          <div style={{ display: 'flex', marginBottom: contentTop ? 'auto': 0, overflow: 'hidden' }}>
             { children }
           </div>
-        <Footer />
-    </LayoutContainer>
+          <Footer />
+      </LayoutContainer>
+      <CookiesBanner />
+    </>
   )
 }
 

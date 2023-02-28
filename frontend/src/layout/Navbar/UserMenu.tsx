@@ -11,15 +11,14 @@ const UserMenu = ({
   logout
 } : User & { logout: () => void }) => {
   const [clicked, setIsClicked] = useState(false);
-  console.log(avatar_img, name, logout)
-
+  
   return (
     <UserMenuDiv>
       <div className='pointer middle'
         onClick={() => setIsClicked(!clicked)}
       >
         <Image
-          src={require('../../../public/avatars/'+avatar_img)}
+          src={avatar_img ? require('../../../public/avatars/'+avatar_img) : ''}
           alt={name ? name : ''}
           width={50}
           height={50}

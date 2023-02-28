@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import InputContainer from '../../components/InputContainer'
 import Logo from '../../components/Logo'
 import { Button, PrimaryToggleButton, SecondaryToggleButton } from '../../styles/buttons'
-import { FlexRowDiv, AlignCenterDiv, MarginDiv, FullWidthDiv } from '../../styles/layout'
+import { FlexRowDiv, AlignCenterDiv, MarginDiv, FullWidthDiv, ShowOnlyMobileDiv } from '../../styles/layout'
 import { AlertText, H1, P, Caption } from '../../styles/texts'
 import { colors } from '../../styles/theme'
 import RegisterBgImage from '../../../public/images/register-bg.jpg'
@@ -33,9 +33,9 @@ const Register = () => {
           .then(res => {
               return res?.data.data
           })
-          .catch(err => console.log(err))
 
         ctx?.saveUserSession({ 
+          id: userInfo.id,
           token: response.data.token, 
           name: userInfo.name, 
           avatar_img: userInfo.avatar_img, 
@@ -73,6 +73,10 @@ const Register = () => {
 
         <FormContainer>
             <RegisterForm onSubmit={handleSubmit(handleRegister)} method='post'>
+                <ShowOnlyMobileDiv mb={'20px'}>
+                  <Logo />
+                </ShowOnlyMobileDiv>
+
                 <H1>
                   Register
                 </H1>
@@ -227,11 +231,12 @@ const LeftContentDiv = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #191919;
+  background-position-y: 40%;
   height: 100%;
-  max-width: 45%;
+  max-width: 55%;
   width: 100%;
   @media screen and (max-width: 768px) {
-    display: none
+    display: none;
   }
 `
 
@@ -252,6 +257,7 @@ const FormContainer = styled.div`
   }
   @media screen and (max-width: 968px) {
     padding: 0 4px;
+    width: 90%;
   }
 `
 

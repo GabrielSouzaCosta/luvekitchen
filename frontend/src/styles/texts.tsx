@@ -1,7 +1,6 @@
-import styled, { css, ThemedStyledProps } from "styled-components";
-import { colors, margins } from "./theme";
+import styled, { css, ThemeProps } from "styled-components";
 
-interface Props extends ThemedStyledProps {
+interface Props extends ThemeProps {
     fontWeight?: string,
     marginSize?: string,
     semibold?: boolean,
@@ -16,10 +15,16 @@ export const H1 = styled.h1`
     @media screen and (max-width: 1400px) {
         font-size: 30px;
     }
+    @media screen and (max-width: 768px) {
+        font-size: 24px;
+    }
 `
 
 export const Title = styled(H1)`
     font-size: 56px;
+    @media screen and (max-width: 768px) {
+        font-size: 40px;
+    }
 `
 
 export const H2 = styled.h2`
@@ -29,6 +34,9 @@ export const H2 = styled.h2`
     margin-bottom: ${(p: Props) => p.marginSize ? p.theme.margins[p.marginSize] : p.theme.margins['sm']};
     @media screen and (max-width: 1400px) {
         font-size: 28px;
+    }
+    @media screen and (max-width: 768px) {
+        font-size: 22px;
     }
 `
 
@@ -40,6 +48,9 @@ export const H3 = styled.h3`
     @media screen and (max-width: 1400px) {
         font-size: 26px;
     }
+    @media screen and (max-width: 768px) {
+        font-size: 20px;
+    }
 `
 
 export const H4 = styled.h4`
@@ -50,6 +61,9 @@ export const H4 = styled.h4`
     @media screen and (max-width: 1400px) {
         font-size: 24px;
     }
+    @media screen and (max-width: 768px) {
+        font-size: 18px;
+    }
 `
 
 export const H5 = styled.h4`
@@ -59,6 +73,9 @@ export const H5 = styled.h4`
     margin-bottom: ${(p: Props) => p.marginSize ? p.theme.margins[p.marginSize] : p.theme.margins['sm']};
     @media screen and (max-width: 1400px) {
         font-size: 22px;
+    }
+    @media screen and (max-width: 768px) {
+        font-size: 16px;
     }
 `
 

@@ -1,4 +1,5 @@
 import { AppContextInterface, User } from "@/@types/context";
+import { useRouter } from "next/router";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const StateContext = createContext<AppContextInterface | null>(null);
@@ -9,6 +10,7 @@ type ContextProps = {
 
 export const ContextProvider = ({ children }: ContextProps) => {
     const [userData, setUserData] = useState<User>();
+    const router = useRouter();
 
     function saveUserSession({ token, name, avatar_img, favorites, id } : User) {
         setUserData({ ...userData, token, name, avatar_img, favorites, id });

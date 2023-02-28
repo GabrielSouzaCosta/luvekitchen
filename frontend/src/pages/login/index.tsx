@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import InputContainer from '../../components/InputContainer'
 import Logo from '../../components/Logo'
 import { Button } from '../../styles/buttons'
-import { AlignCenterDiv, FlexRowDiv, FullWidthDiv, MarginDiv } from '../../styles/layout'
+import { AlignCenterDiv, FlexRowDiv, FullWidthDiv, MarginDiv, ShowOnlyMobileDiv } from '../../styles/layout'
 import { AlertText, Callout, H1, P } from '../../styles/texts'
 import { colors } from '../../styles/theme'
 import LoginBgImage from '../../../public/images/login-bg.jpg'
@@ -33,7 +33,6 @@ const Login = () => {
           .then(res => {
               return res?.data.data
           })
-          .catch(err => console.log(err))
 
         ctx?.saveUserSession({ 
           id: userInfo.id,
@@ -51,7 +50,6 @@ const Login = () => {
       }
     },
     onError: ({response}) => {
-      console.log(response)
       response?.data?.message && response.data.message.length < 50 ? 
       setRequestError(response.data.message)
       :
@@ -60,7 +58,6 @@ const Login = () => {
   });
 
   const handleLogin : SubmitHandler<LoginData> = (data) => {
-    console.log('data')
     mutate(data);
   }
 
@@ -81,6 +78,10 @@ const Login = () => {
           </LeftContentDiv>
           <FormContainer>
             <LoginForm onSubmit={handleSubmit(handleLogin)}>
+                <ShowOnlyMobileDiv mb={'20px'}>
+                  <Logo />
+                </ShowOnlyMobileDiv>
+
                 <H1>
                   Login
                 </H1>
@@ -129,7 +130,7 @@ const Login = () => {
 
                   <Link href="/">
                     <P hover>
-                      Esqueceu sua senha?
+                      Forgot your password?
                     </P>
                   </Link>
                 </FullWidthDiv>

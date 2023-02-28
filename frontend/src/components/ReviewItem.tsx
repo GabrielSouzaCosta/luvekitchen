@@ -37,7 +37,6 @@ const ReviewItem = ({
 
   const { mutate: addCommentMutate } = useMutation(addCommentToRecipe, {
     onSuccess: function(data) {
-      console.log(data);
       queryClient.invalidateQueries({ queryKey: ['recipe_comments'] })
     }
   })

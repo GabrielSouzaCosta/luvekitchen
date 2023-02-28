@@ -6,7 +6,7 @@ import { IoCheckmark, IoEggSharp, IoShare, IoStar } from 'react-icons/io5';
 import styled from 'styled-components';
 import useGetRecipe from '../../hooks/api/useGetRecipe';
 import Layout from '../../layout/Layout'
-import { Container, FlexRowBetweenDiv, FlexRowDiv, MarginDiv } from '../../styles/layout';
+import { Container, FlexRowBetweenDiv, FlexRowDiv, MarginDiv, ShowOnlyMobileDiv } from '../../styles/layout';
 import { H1, H2, H3, H4, H5, ListItem, P, TextMuted } from '../../styles/texts';
 import { colors } from '../../styles/theme';
 import { Rating } from '@mui/material';
@@ -89,26 +89,27 @@ const Recipe = () => {
 				<FlexContainer>
 					<div>
 						<FlexRowBetweenDiv>
-							<MarginDiv mb={'4px'}>
-								<H1>
-									{ recipe?.data.meals[0]['strMeal'] }
-								</H1>
-							</MarginDiv>
+							
+							<H2 marginSize='none'>
+								{ recipe?.data.meals[0]['strMeal'] }
+							</H2>
+							
 							<FlexRowDiv>
 								{id &&
-									<MarginDiv ml={'20px'}>
+									<MarginDiv ml={'10px'}>
 										<Favorite
+											heartSmall
 											recipe_id={id}
 											name={recipe?.data.meals[0]['strMeal']}
 											image_url={recipe?.data.meals[0]['strMealThumb']}
 										/>
 									</MarginDiv>
 								}
-								<MarginDiv ml={'20px'}>
+								<ShowOnlyMobileDiv ml={'10px'}>
 									<button type="button" onClick={handleShareRecipe}>
-										<IoMdShare className="pointer-opacity" size={40} color={colors.dark} />
+										<IoMdShare className="pointer-opacity" size={30} color={colors.dark} />
 									</button>
-								</MarginDiv>
+								</ShowOnlyMobileDiv>
 
 							</FlexRowDiv>
 						</FlexRowBetweenDiv>
@@ -136,17 +137,19 @@ const Recipe = () => {
 							readOnly
 						/>
 						<MarginDiv m={'8px 0 20px 0'}>
-							<FlexRowDiv>
-								<MarginDiv m={'6px'}>
-									<P style={{ color: colors.primary, borderBottom: `0.5px solid ${colors.primary}` }} marginSize="none">
-										{ comments?.data?.length ? (comments?.data?.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / comments?.data?.length ) : '0' }
-									</P>
-								</MarginDiv>
-								<P marginSize={'none'} style={{ color: colors.primary }}>
-									( {comments?.data?.length ? comments?.data?.length : '0 '}
-									{comments?.data?.length > 1 || comments?.data?.length === 0 ? 'reviews': 'review'} )
-								</P>
-							</FlexRowDiv>
+								<FlexRowDiv>
+									<MarginDiv m={'6px'}>
+										<P style={{ color: colors.primary, borderBottom: `0.5px solid ${colors.primary}` }} marginSize="none">
+											{ comments?.data?.length ? (comments?.data?.reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / comments?.data?.length ) : '0' }
+										</P>
+									</MarginDiv>
+									<a href="#reviews">
+										<P marginSize={'none'} style={{ color: colors.primary }}>
+											( {comments?.data?.length ? comments?.data?.length : '0'}
+											{comments?.data?.length > 1 || comments?.data?.length === 0 ? ' reviews': ' review'} )
+										</P>
+									</a>
+								</FlexRowDiv>
 						</MarginDiv>
 
 						<MarginDiv mb={'30px'}>
@@ -198,12 +201,12 @@ const Recipe = () => {
 							</FlexRowBetweenDiv>
 						</MarginDiv>
 
-						<H5>
+						<H5 id='reviews'>
 							Reviews ({comments?.data?.length})
 						</H5>
 						
 						{/* Create new review */}
-						{ctx?.userData?.token && !comments?.data?.some(item => item.user_id === ctx?.userData?.id) &&
+						{ctx?.userData?.token && !comments?.data?.find((item: any) => item.user_id === Number(ctx?.userData?.id)) &&
 							<ReviewItem
 								recipe={recipe?.data.meals[0]}
 								isCreate
@@ -222,14 +225,14 @@ const Recipe = () => {
 							</MarginDiv>
 						}
 
-						{comments?.data?.map(item => {
+						{comments?.data?.map((item : any) => {
 								return (
 									<ReviewItem
 										key={item.created_at}
 										rating={item.rating}
 										user={item.user_name}
 										userImage={require('../../../public/avatars/'+item.user_image)}
-										date={item.created_at}
+										date={item.created_at.split(' ')[0]}
 										review={item.comment}
 									/>
 								)

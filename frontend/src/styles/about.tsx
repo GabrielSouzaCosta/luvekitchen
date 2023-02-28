@@ -9,11 +9,12 @@ export const AboutContainer = styled(Container)`
     align-self: center;
     flex-direction: column;
     justify-content: center;
+    margin: 0 auto;
     @media screen and (max-width: 1400px) {
         padding: 2rem 24rem;
     }
     @media screen and (max-width: 968px) {
-        padding: 1rem 4rem;
+        padding: 2rem 2rem;
     }
 `
 
@@ -22,27 +23,41 @@ const Ul = styled.ul`
     justify-content: center;
     column-gap: 1rem;
     margin-top: 1.5rem;
+    > li:nth-child(2n+1) > a {
+        color: ${p => p.theme.colors.dark};
+        transition: all 200ms;
+        :hover {
+            color: ${p => p.theme.colors.primary}
+        }
+    }
+    > li:nth-child(2n) > a {
+        color: ${p => p.theme.colors.dark};
+        transition: all 200ms;
+        :hover {
+            color: ${p => p.theme.colors.secondary}
+        }
+    }
 `
 
 export const SocialIcons = () => (
     <Ul>
         <li>
-            <Link href="https://www.linkedin.com/in/gabriel-souza-costa-8443481bb/" target="_blank" className="link">
+            <Link href="https://www.linkedin.com/in/gabriel-souza-costa-8443481bb/" target="_blank">
                 <IoLogoLinkedin size={64} />
             </Link>
         </li>
         <li>
-            <Link href="https://github.com/GabrielSouzaCosta/" target="_blank" className="link">
+            <Link href="https://github.com/GabrielSouzaCosta/" target="_blank">
                 <IoLogoGithub size={64} />
             </Link>
         </li>
         <li>
-            <Link href="https://www.instagram.com/__gabrielscosta__/" target="_blank" className="link">
+            <Link href="https://www.instagram.com/webdev_gabriel/" target="_blank">
                 <IoLogoInstagram size={64} />
             </Link>
         </li>
         <li>
-            <Link href="mailto:gabrielsscosta2010@hotmail.com" target="_blank" className='link'>
+            <Link href="mailto:gabrielsscosta2010@hotmail.com" target="_blank">
                 <IoMailOutline size={64} />
             </Link>
         </li>

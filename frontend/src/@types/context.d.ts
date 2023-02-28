@@ -7,7 +7,7 @@ export interface Favorite {
 }
 
 export interface User {
-    id?: string,
+    id?: number,
     token?: string,
     name?: string,
     avatar_img?: string,
