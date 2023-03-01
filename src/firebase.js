@@ -46,7 +46,6 @@ export const createUserDocument = async (user, {
         createdAt: new Date(),
         favorites: []
       });
-      
     } catch(err) {
       console.log('error registering user', err)
     }

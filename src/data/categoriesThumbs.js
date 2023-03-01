@@ -1,0 +1,16 @@
+export default {
+    'Seafood': 'https://www.themealdb.com/images/media/meals/ysxwuq1487323065.jpg',
+    'Beef': 'https://www.themealdb.com/images/media/meals/1529444830.jpg',
+    'Breakfast': 'https://www.themealdb.com/images/media/meals/sqrtwu1511721265.jpg',
+    'Chicken': 'https://www.themealdb.com/images/media/meals/wruvqv1511880994.jpg',
+    'Dessert': 'https://www.themealdb.com/images/media/meals/tqtywx1468317395.jpg',
+    'Goat': 'https://www.themealdb.com/images/media/meals/cuio7s1555492979.jpg',
+    'Lamb': 'https://www.themealdb.com/images/media/meals/qtqvys1468573168.jpg',
+    'Miscellaneous': 'https://www.themealdb.com/images/media/meals/wwuqvt1487345467.jpg',
+    'Pasta': 'https://www.themealdb.com/images/media/meals/uquqtu1511178042.jpg',
+    'Pork': 'https://www.themealdb.com/images/media/meals/wxuvuv1511299147.jpg',
+    'Side': 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
+    'Starter': 'https://www.themealdb.com/images/media/meals/rvtvuw1511190488.jpg',
+    'Vegan': 'https://www.themealdb.com/images/media/meals/rvxxuy1468312893.jpg',
+    'Vegetarian': 'https://www.themealdb.com/images/media/meals/wssvvs1511785879.jpg',
+}
