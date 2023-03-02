@@ -3,6 +3,8 @@
 <p>
 Luv&Kitchen is a recipe website built using React JS, Styled Components and Firebase. <br>
 Recipes API: TheMealDb
+  
+Website: https://luvekitchen.vercel.app/
 </p>
 
 ## Home
